@@ -9,14 +9,56 @@ import Card from '../components/Card.astro';
       <h1>delutilo.</h1>
       <nav>
         <ul class="menu">
-          <li class="menu-item">dev</li>
-          <li class="menu-item active">design</li>
+          <li class="menu-item">design</li>
+          <li class="menu-item active">dev</li>
           <li class="menu-item">me</li>
+          <span class="slider" id="slider"></span>
         </ul>
       </nav>
     </div>
   </main>
 </Layout>
+
+<script>
+  function highlightMenuItem(slider, item) {
+    let x = item.offsetLeft;
+    let y = item.offsetTop;
+    let w = item.clientWidth;
+    let h = item.offsetHeight;
+
+    slider.style.left = `${x}px`;
+    slider.style.top = `${y}px`;
+    slider.style.width = `${w}px`;
+    slider.style.height = `${h}px`;
+  }
+
+  let nav = document.querySelector('nav');
+  let menuItems = document.querySelectorAll('.menu-item');
+  let activeItem = document.querySelector('.menu-item.active');
+  let slider = document.getElementById('slider');
+
+  setTimeout(() => {
+    if (activeItem) {
+      highlightMenuItem(slider, activeItem);
+    }
+  }, 500);
+
+  menuItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      activeItem.classList.remove('active');
+      item.classList.add('active');
+      activeItem = item;
+      highlightMenuItem(slider, item);
+    });
+    item.addEventListener('mouseover', () => {
+      highlightMenuItem(slider, item);
+    });
+  });
+
+  nav.addEventListener('mouseleave', () => {
+    highlightMenuItem(slider, activeItem);
+  });
+</script>
 
 <style>
   main {
@@ -33,33 +75,18 @@ import Card from '../components/Card.astro';
     font-size: 4rem;
     line-height: 1;
     text-align: center;
+    z-index: 5;
+  }
+
+  nav {
+    margin-left: -2rem;
+    position: relative;
   }
 
   @starting-style {
     .menu-item {
-      display: none;
+      visibility: hidden;
       opacity: 0;
-    }
-  }
-
-  .menu-item {
-    display: none;
-    font-family: 'RaglotDemo', sans-serif;
-    font-size: 4rem;
-    line-height: 1;
-    margin: 0 1rem;
-    cursor: pointer;
-    transition:
-      opacity 0.25s,
-      display 0.25s;
-    transition-behavior: allow-discrete;
-    opacity: 0;
-    @apply px-8;
-
-    &.active {
-      display: block;
-      opacity: 1;
-      @apply bg-gray-400 rounded-full;
     }
   }
 
@@ -67,11 +94,55 @@ import Card from '../components/Card.astro';
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    align-items: flex-start;
     &:hover {
       .menu-item:not(.active) {
-        display: block;
+        visibility: visible;
         opacity: 0.5;
       }
+    }
+  }
+
+  .menu-item {
+    /* display: none; */
+    visibility: hidden;
+    z-index: 5;
+    font-family: 'RaglotDemo', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    margin: 0 1rem;
+    cursor: pointer;
+    transition:
+      opacity 0.25s,
+      visibility 0.25s;
+    transition-behavior: allow-discrete;
+    opacity: 0;
+    @apply px-8;
+
+    &:hover {
+      color: white;
+      opacity: 1 !important;
+    }
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    transition: all 0.25s;
+    animation: 500ms ease-in 500ms grow;
+    @apply bg-gray-400 rounded-full;
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(100%);
     }
   }
 </style>
