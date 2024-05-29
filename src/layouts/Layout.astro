@@ -1,4 +1,7 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import { fade } from 'astro:transitions';
+
 interface Props {
   title: string;
 }
@@ -15,47 +18,59 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
   <body>
-    <slot />
+    <div class="h-full w-full flex flex-col items-center justify-center">
+      <slot />
+    </div>
+    <style is:global>
+      @font-face {
+        font-family: 'RaglotDemo';
+        src: url('/fonts/Raglot-Demo.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --accent: 136, 58, 234;
+        --accent-light: 224, 204, 250;
+        --accent-dark: 49, 10, 101;
+        --accent-gradient: linear-gradient(
+          45deg,
+          rgb(var(--accent)),
+          rgb(var(--accent-light)) 30%,
+          white 60%
+        );
+      }
+      html,
+      body {
+        font-family: system-ui, sans-serif;
+        background: #fff;
+        height: 100vh;
+        width: 100vw;
+      }
+      main {
+        margin: auto;
+        padding: 1rem;
+        width: 800px;
+        max-width: calc(100% - 2rem);
+        color: black;
+        font-size: 20px;
+        line-height: 1.6;
+      }
+      code {
+        font-family:
+          Menlo,
+          Monaco,
+          Lucida Console,
+          Liberation Mono,
+          DejaVu Sans Mono,
+          Bitstream Vera Sans Mono,
+          Courier New,
+          monospace;
+      }
+    </style>
   </body>
 </html>
-<style is:global>
-  @font-face {
-    font-family: 'RaglotDemo';
-    src: url('/fonts/Raglot-Demo.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
-  }
-  html,
-  body {
-    font-family: system-ui, sans-serif;
-    background: #fff;
-    height: 100vh;
-    width: 100vw;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-</style>
