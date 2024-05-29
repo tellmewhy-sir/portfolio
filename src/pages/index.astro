@@ -1,6 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+
+let menuLinks = [
+  {
+    title: 'design',
+    href: '/design',
+    isActive: false,
+  },
+  {
+    title: 'me',
+    href: '/me',
+    isActive: false,
+  },
+  {
+    title: 'dev',
+    href: '/dev',
+    isActive: true,
+  },
+  {
+    title: 'blog',
+    href: '/blog',
+    isActive: false,
+  },
+  {
+    title: 'contact',
+    href: '/contact',
+    isActive: false,
+  },
+];
+const isEven = menuLinks.length % 2 === 0;
 ---
 
 <Layout title="David Elutilo">
@@ -8,12 +37,17 @@ import Card from '../components/Card.astro';
     <div class="h-full w-full flex items-center justify-center">
       <h1 id="title">delutilo.</h1>
       <nav>
-        <ul class="menu">
-          <li class="menu-item" data-order="1">design</li>
-          <li class="menu-item" data-order="3">me</li>
-          <li class="menu-item active" data-order="2">dev</li>
-          <li class="menu-item" data-order="4">blog</li>
-          <li class="menu-item" data-order="5">contact</li>
+        <ul class={`menu ${isEven ? 'is-even' : ''}`}>
+          {
+            menuLinks.map((link, index) => (
+              <li
+                class={`menu-item ${link.isActive ? 'active' : ''}`}
+                data-order={index}
+              >
+                {link.title}
+              </li>
+            ))
+          }
           <span class="slider" id="slider"></span>
         </ul>
       </nav>
@@ -53,20 +87,24 @@ import Card from '../components/Card.astro';
       activeItem.classList.remove('active');
       item.classList.add('active');
 
-      console.log({
-        activeItem: activeItem.offsetTop,
-        item: item.offsetTop,
-      });
+      // console.log({
+      //   activeItem: activeItem.offsetTop,
+      //   item: item.offsetTop,
+      // });
 
-      let distanceFromTitle =
-        title.offsetTop - (item.offsetTop + navDistanceFromTitle / 2 + 20);
+      let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
 
       console.log(distanceFromTitle);
+
+      if (parseInt(item.dataset.order) > parseInt(activeItem.dataset.order)) {
+        distanceFromTitle = -distanceFromTitle;
+      }
 
       nav.style.transform = `translateY(${distanceFromTitle}px)`;
 
       activeItem = item;
     });
+
     item.addEventListener('mouseover', () => {
       highlightMenuItem(slider, item);
     });
@@ -118,6 +156,10 @@ import Card from '../components/Card.astro';
         visibility: visible;
         opacity: 0.5;
       }
+    }
+
+    &.is-even {
+      transform: translateY(calc(-1rem));
     }
   }
 
