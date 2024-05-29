@@ -6,12 +6,14 @@ import Card from '../components/Card.astro';
 <Layout title="David Elutilo">
   <main class="h-full w-full">
     <div class="h-full w-full flex items-center justify-center">
-      <h1>delutilo.</h1>
+      <h1 id="title">delutilo.</h1>
       <nav>
         <ul class="menu">
-          <li class="menu-item">design</li>
-          <li class="menu-item active">dev</li>
-          <li class="menu-item">me</li>
+          <li class="menu-item" data-order="1">design</li>
+          <li class="menu-item" data-order="3">me</li>
+          <li class="menu-item active" data-order="2">dev</li>
+          <li class="menu-item" data-order="4">blog</li>
+          <li class="menu-item" data-order="5">contact</li>
           <span class="slider" id="slider"></span>
         </ul>
       </nav>
@@ -33,9 +35,12 @@ import Card from '../components/Card.astro';
   }
 
   let nav = document.querySelector('nav');
+  let title = document.getElementById('title');
   let menuItems = document.querySelectorAll('.menu-item');
   let activeItem = document.querySelector('.menu-item.active');
   let slider = document.getElementById('slider');
+
+  let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
 
   setTimeout(() => {
     if (activeItem) {
@@ -47,8 +52,20 @@ import Card from '../components/Card.astro';
     item.addEventListener('click', () => {
       activeItem.classList.remove('active');
       item.classList.add('active');
+
+      console.log({
+        activeItem: activeItem.offsetTop,
+        item: item.offsetTop,
+      });
+
+      let distanceFromTitle =
+        title.offsetTop - (item.offsetTop + navDistanceFromTitle / 2 + 20);
+
+      console.log(distanceFromTitle);
+
+      nav.style.transform = `translateY(${distanceFromTitle}px)`;
+
       activeItem = item;
-      highlightMenuItem(slider, item);
     });
     item.addEventListener('mouseover', () => {
       highlightMenuItem(slider, item);
@@ -81,6 +98,7 @@ import Card from '../components/Card.astro';
   nav {
     margin-left: -2rem;
     position: relative;
+    transition: all 0.25s;
   }
 
   @starting-style {
