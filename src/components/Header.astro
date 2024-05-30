@@ -38,7 +38,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
         menuLinks.map((link, index) => (
           <li
             class={`menu-item ${isActive(link.href) ? 'active' : ''}`}
-            data-order={index}
+            data-order={index + 1}
             data-title={link.title}
           >
             <a href={link.href}>{link.title}</a>
@@ -53,25 +53,28 @@ const isActive = (href: string) => Astro.url.pathname === href;
 <script is:inline src="helpers/animation.js"></script>
 
 <script>
+  let header = document.getElementById('header');
+  let nav = document.querySelector('nav');
+  let title = document.getElementById('title');
+  let menu = document.querySelector('.menu');
+  let menuItems = document.querySelectorAll('.menu-item');
+  let activeItem = document.querySelector('.menu-item.active');
+  let slider = document.getElementById('slider');
+
+  let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
+
   document.addEventListener('astro:page-load', () => {
-    let header = document.getElementById('header');
-    let nav = document.querySelector('nav');
-    let title = document.getElementById('title');
-    let menu = document.querySelector('.menu');
-    let menuItems = document.querySelectorAll('.menu-item');
-    let activeItem = document.querySelector('.menu-item.active');
-    let slider = document.getElementById('slider');
-
-    let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
-
     if (window.location.pathname !== '/') {
       header.classList.add('shrink');
     }
 
+    // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
+
     setTimeout(() => {
+      console.log('timeout fires');
       if (activeItem) {
         highlightMenuItem(slider, activeItem);
-        activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
+        // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
         menu.style.pointerEvents = 'auto';
       }
     }, 500);
@@ -81,23 +84,26 @@ const isActive = (href: string) => Astro.url.pathname === href;
         menu.style.pointerEvents = 'none';
         if (item.classList.contains('active')) return;
 
-        activeItem.classList.remove('active');
-        item.classList.add('active');
+        activeItem = animateActiveTab(nav, item, navDistanceFromTitle);
 
-        let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
+        // activeItem.classList.remove('active');
+        // item.classList.add('active');
 
-        let itemOrder = parseInt(item.dataset.order);
-        let activeItemOrder = parseInt(activeItem.dataset.order);
+        // let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
 
-        if (itemOrder > activeItemOrder) {
-          distanceFromTitle = -distanceFromTitle;
-        }
+        // let itemOrder = parseInt(item.dataset.order);
+        // let activeItemOrder = parseInt(activeItem.dataset.order);
 
-        nav.style.transform = `translateY(${distanceFromTitle}px)`;
+        // if (itemOrder > activeItemOrder) {
+        //   distanceFromTitle = -distanceFromTitle;
+        // }
 
-        activeItem = item;
+        // nav.style.transform = `translateY(${distanceFromTitle}px)`;
+
+        // activeItem = item;
 
         slider.classList.add('highlighted');
+
         if (item.dataset.title === 'dev') {
           header?.classList.remove('shrink');
         } else {

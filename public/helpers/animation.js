@@ -13,9 +13,9 @@ function highlightMenuItem(slider, item) {
 function animateActiveTab(nav, navItem, scrollDistance) {
   let activeItem = nav.querySelector('.active');
 
-  if (activeItem === navItem) {
-    return activeItem;
-  }
+  // if (activeItem === navItem) {
+  //   return activeItem;
+  // }
 
   activeItem.classList.remove('active');
   navItem.classList.add('active');
@@ -25,9 +25,13 @@ function animateActiveTab(nav, navItem, scrollDistance) {
   let itemOrder = parseInt(navItem.dataset.order);
   let activeItemOrder = parseInt(activeItem.dataset.order);
 
+  console.log(itemOrder, activeItemOrder);
+
   if (itemOrder > activeItemOrder) {
     distanceFromTitle = -distanceFromTitle;
   }
+
+  console.log(distanceFromTitle);
 
   nav.style.transform = `translateY(${distanceFromTitle}px)`;
 
