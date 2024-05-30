@@ -32,7 +32,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
   transition:name="header"
 >
   <h1 id="title" class="title">delutilo.</h1>
-  <nav>
+  <nav data-prev={0}>
     <ul transition:name="menu" class={`menu ${isEven ? 'is-even' : ''}`}>
       {
         menuLinks.map((link, index) => (
@@ -68,13 +68,10 @@ const isActive = (href: string) => Astro.url.pathname === href;
       header.classList.add('shrink');
     }
 
-    // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
-
     setTimeout(() => {
       console.log('timeout fires');
       if (activeItem) {
         highlightMenuItem(slider, activeItem);
-        // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
         menu.style.pointerEvents = 'auto';
       }
     }, 500);
@@ -84,23 +81,28 @@ const isActive = (href: string) => Astro.url.pathname === href;
         menu.style.pointerEvents = 'none';
         if (item.classList.contains('active')) return;
 
-        activeItem = animateActiveTab(nav, item, navDistanceFromTitle);
+        let itemOrder = parseInt(item.dataset.order);
+        let activeItemOrder = parseInt(activeItem.dataset.order);
+        let itemHeight = item.clientHeight + 16;
+        let stepsFromBase = itemOrder - activeItemOrder;
 
-        // activeItem.classList.remove('active');
-        // item.classList.add('active');
+        let scrollDistance = Math.abs(stepsFromBase * itemHeight);
+        if (stepsFromBase > 0) {
+          scrollDistance = -scrollDistance;
+        }
 
-        // let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
+        if (nav?.dataset.prev) {
+          let prev = parseInt(nav.dataset.prev);
+          scrollDistance += prev;
+        }
+        nav.style.transform = `translateY(${scrollDistance}px)`;
 
-        // let itemOrder = parseInt(item.dataset.order);
-        // let activeItemOrder = parseInt(activeItem.dataset.order);
+        activeItem.classList.remove('active');
+        item.classList.add('active');
 
-        // if (itemOrder > activeItemOrder) {
-        //   distanceFromTitle = -distanceFromTitle;
-        // }
+        nav.dataset.prev = scrollDistance;
 
-        // nav.style.transform = `translateY(${distanceFromTitle}px)`;
-
-        // activeItem = item;
+        activeItem = item;
 
         slider.classList.add('highlighted');
 
@@ -135,6 +137,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
     margin-left: -2rem;
     position: relative;
     transition: all 0.25s;
+    /* transform-origin: top; */
   }
 
   /* .title {
