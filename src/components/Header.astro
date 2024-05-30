@@ -3,35 +3,31 @@ let menuLinks = [
   {
     title: 'design',
     href: '/design',
-    isActive: false,
   },
   {
     title: 'me',
     href: '/about',
-    isActive: false,
   },
   {
     title: 'dev',
     href: '/',
-    isActive: true,
   },
   {
     title: 'blog',
     href: '/blog',
-    isActive: false,
   },
   {
     title: 'contact',
     href: '/contact',
-    isActive: false,
   },
 ];
 const isEven = menuLinks.length % 2 === 0;
+const isActive = (href: string) => Astro.url.pathname === href;
 ---
 
 <header
   id="header"
-  class="flex items-center"
+  class="header flex items-center"
   transition:persist
   transition:name="header"
 >
@@ -41,8 +37,9 @@ const isEven = menuLinks.length % 2 === 0;
       {
         menuLinks.map((link, index) => (
           <li
-            class={`menu-item ${link.isActive ? 'active' : ''}`}
+            class={`menu-item ${isActive(link.href) ? 'active' : ''}`}
             data-order={index}
+            data-title={link.title}
           >
             <a href={link.href}>{link.title}</a>
           </li>
@@ -65,15 +62,16 @@ const isEven = menuLinks.length % 2 === 0;
     let activeItem = document.querySelector('.menu-item.active');
     let slider = document.getElementById('slider');
 
-    function fadeOutTitle() {
-      title.classList.add('exit');
-    }
-
     let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
+
+    if (window.location.pathname !== '/') {
+      header.classList.add('shrink');
+    }
 
     setTimeout(() => {
       if (activeItem) {
         highlightMenuItem(slider, activeItem);
+        activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
         menu.style.pointerEvents = 'auto';
       }
     }, 500);
@@ -100,6 +98,11 @@ const isEven = menuLinks.length % 2 === 0;
         activeItem = item;
 
         slider.classList.add('highlighted');
+        if (item.dataset.title === 'dev') {
+          header?.classList.remove('shrink');
+        } else {
+          header?.classList.add('shrink');
+        }
       });
 
       item.addEventListener('mouseover', () => {
@@ -140,6 +143,13 @@ const isEven = menuLinks.length % 2 === 0;
     .menu-item {
       visibility: hidden;
       opacity: 0;
+    }
+  }
+
+  .header {
+    transition: all 0.25s;
+    &.shrink {
+      transform: scale(0.5);
     }
   }
 

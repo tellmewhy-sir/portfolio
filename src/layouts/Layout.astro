@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import Header from '../components/Header.astro';
 import { fade } from 'astro:transitions';
 
 interface Props {
@@ -22,6 +23,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <div class="h-full w-full flex flex-col items-center justify-center">
+      <Header />
       <slot />
     </div>
     <style is:global>
