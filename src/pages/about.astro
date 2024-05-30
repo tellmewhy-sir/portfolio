@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import { fade } from 'astro:transitions';
+import { fade, slide } from 'astro:transitions';
 ---
 
 <Layout title="About">
   <Header />
-  <main>
+  <main class="container">
     <h1>About</h1>
     <p>This is the about page.</p>
   </main>

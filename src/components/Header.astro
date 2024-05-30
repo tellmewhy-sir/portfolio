@@ -12,7 +12,7 @@ let menuLinks = [
   },
   {
     title: 'dev',
-    href: '/dev',
+    href: '/',
     isActive: true,
   },
   {
@@ -29,9 +29,14 @@ let menuLinks = [
 const isEven = menuLinks.length % 2 === 0;
 ---
 
-<header class="flex items-center" transition:persist>
+<header
+  id="header"
+  class="flex items-center"
+  transition:persist
+  transition:name="menu"
+>
   <h1 id="title" class="title">delutilo.</h1>
-  <nav>
+  <nav transition:persist>
     <ul class={`menu ${isEven ? 'is-even' : ''}`}>
       {
         menuLinks.map((link, index) => (
@@ -40,10 +45,11 @@ const isEven = menuLinks.length % 2 === 0;
             data-order={index}
           >
             <a href={link.href}>{link.title}</a>
+            {/* {link.title} */}
           </li>
         ))
       }
-      <span class="slider" id="slider"></span>
+      <span transition:persist class="slider" id="slider"></span>
     </ul>
   </nav>
 </header>
@@ -51,71 +57,59 @@ const isEven = menuLinks.length % 2 === 0;
 <script is:inline src="helpers/animation.js"></script>
 
 <script>
-  let nav = document.querySelector('nav');
-  let title = document.getElementById('title');
-  let menuItems = document.querySelectorAll('.menu-item');
-  let activeItem = document.querySelector('.menu-item.active');
-  let slider = document.getElementById('slider');
-
-  function fadeOutTitle() {
-    title.classList.add('exit');
-  }
-
-  let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
-
   document.addEventListener('astro:page-load', () => {
+    let header = document.getElementById('header');
+    let nav = document.querySelector('nav');
+    let title = document.getElementById('title');
+    let menu = document.querySelector('.menu');
+    let menuItems = document.querySelectorAll('.menu-item');
     let activeItem = document.querySelector('.menu-item.active');
     let slider = document.getElementById('slider');
 
+    function fadeOutTitle() {
+      title.classList.add('exit');
+    }
+
+    let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
+
     setTimeout(() => {
       if (activeItem) {
-        highlightMenuItem(slider, activeItem);
+        // highlightMenuItem(slider, activeItem);
+        menu.style.pointerEvents = 'auto';
       }
-    }, 500);
+    }, 1000);
 
-    document.addEventListener('astro:before-preparation', () => {
-      title.style.transform = 'translateX(-50%)';
-      title.style.opacity = 0;
-    });
-  });
+    menuItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        menu.style.pointerEvents = 'none';
+        if (item.classList.contains('active')) return;
 
-  menuItems.forEach((item) => {
-    item.addEventListener('click', () => {
-      if (item.classList.contains('active')) return;
+        activeItem.classList.remove('active');
+        item.classList.add('active');
 
-      activeItem.classList.remove('active');
-      item.classList.add('active');
+        let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
 
-      // console.log({
-      //   activeItem: activeItem.offsetTop,
-      //   item: item.offsetTop,
-      // });
+        let itemOrder = parseInt(item.dataset.order);
+        let activeItemOrder = parseInt(activeItem.dataset.order);
 
-      let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
+        if (itemOrder > activeItemOrder) {
+          distanceFromTitle = -distanceFromTitle;
+        }
 
-      console.log(distanceFromTitle);
+        nav.style.transform = `translateY(${distanceFromTitle}px)`;
 
-      let itemOrder = parseInt(item.dataset.order);
-      let activeItemOrder = parseInt(activeItem.dataset.order);
+        activeItem = item;
+        // menu.style.pointerEvents = 'auto';
+      });
 
-      if (itemOrder > activeItemOrder) {
-        distanceFromTitle = -distanceFromTitle;
-      }
-
-      nav.style.transform = `translateY(${distanceFromTitle}px)`;
-
-      activeItem = item;
-
-      // fadeOutTitle();
+      item.addEventListener('mouseover', () => {
+        highlightMenuItem(slider, item);
+      });
     });
 
-    item.addEventListener('mouseover', () => {
-      highlightMenuItem(slider, item);
+    nav.addEventListener('mouseleave', () => {
+      highlightMenuItem(slider, activeItem);
     });
-  });
-
-  nav.addEventListener('mouseleave', () => {
-    highlightMenuItem(slider, activeItem);
   });
 </script>
 
