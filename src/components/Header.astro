@@ -32,7 +32,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
   transition:name="header"
 >
   <h1 id="title" class="title">delutilo.</h1>
-  <nav>
+  <nav data-prev={0}>
     <ul transition:name="menu" class={`menu ${isEven ? 'is-even' : ''}`}>
       {
         menuLinks.map((link, index) => (
@@ -55,52 +55,61 @@ const isActive = (href: string) => Astro.url.pathname === href;
 <script>
   let header = document.getElementById('header');
   let nav = document.querySelector('nav');
-  let title = document.getElementById('title');
   let menu = document.querySelector('.menu');
   let menuItems = document.querySelectorAll('.menu-item');
-  let activeItem = document.querySelector('.menu-item.active');
+  let prevActive: HTMLElement | null = null;
+  let currActive: HTMLElement | null =
+    document.querySelector('.menu-item.active');
   let slider = document.getElementById('slider');
-
-  let navDistanceFromTitle = title.offsetTop - nav.offsetTop;
 
   document.addEventListener('astro:page-load', () => {
     if (window.location.pathname !== '/') {
       header.classList.add('shrink');
     }
 
-    // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
-
     setTimeout(() => {
-      console.log('timeout fires');
-      if (activeItem) {
-        highlightMenuItem(slider, activeItem);
-        // activeItem = animateActiveTab(nav, activeItem, navDistanceFromTitle);
+      if (currActive) {
+        highlightMenuItem(slider, currActive);
         menu.style.pointerEvents = 'auto';
       }
     }, 500);
+
+    if (!parseInt(nav?.dataset.prev)) {
+      setActiveTab(currActive);
+    }
+
+    function setActiveTab(item: HTMLElement | null) {
+      let nextItemOrder = parseInt(item.dataset.order);
+      let currActiveOrder = prevActive ? parseInt(currActive.dataset.order) : 3;
+
+      let itemHeight = currActive.clientHeight + 16;
+      let stepsFromBase = nextItemOrder - currActiveOrder;
+
+      let scrollDistance = Math.abs(stepsFromBase * itemHeight);
+      if (stepsFromBase > 0) {
+        scrollDistance = -scrollDistance;
+      }
+
+      if (nav?.dataset.prev) {
+        let prev = parseInt(nav.dataset.prev);
+        scrollDistance += prev;
+      }
+      nav.style.transform = `translateY(${scrollDistance}px)`;
+
+      currActive.classList.remove('active');
+      item.classList.add('active');
+      prevActive = currActive;
+      currActive = item;
+
+      nav.dataset.prev = scrollDistance;
+    }
 
     menuItems.forEach((item) => {
       item.addEventListener('click', () => {
         menu.style.pointerEvents = 'none';
         if (item.classList.contains('active')) return;
 
-        activeItem = animateActiveTab(nav, item, navDistanceFromTitle);
-
-        // activeItem.classList.remove('active');
-        // item.classList.add('active');
-
-        // let distanceFromTitle = Math.abs(item.offsetTop - navDistanceFromTitle);
-
-        // let itemOrder = parseInt(item.dataset.order);
-        // let activeItemOrder = parseInt(activeItem.dataset.order);
-
-        // if (itemOrder > activeItemOrder) {
-        //   distanceFromTitle = -distanceFromTitle;
-        // }
-
-        // nav.style.transform = `translateY(${distanceFromTitle}px)`;
-
-        // activeItem = item;
+        setActiveTab(item);
 
         slider.classList.add('highlighted');
 
@@ -117,7 +126,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
     });
 
     nav.addEventListener('mouseleave', () => {
-      highlightMenuItem(slider, activeItem);
+      highlightMenuItem(slider, currActive);
     });
   });
 </script>
@@ -136,14 +145,6 @@ const isActive = (href: string) => Astro.url.pathname === href;
     position: relative;
     transition: all 0.25s;
   }
-
-  /* .title {
-    transition: all 0.5s ease-out;
-    &.exit {
-      transform: translateX(-50%);
-      opacity: 0;
-    }
-  } */
 
   @starting-style {
     .menu-item {
@@ -177,7 +178,6 @@ const isActive = (href: string) => Astro.url.pathname === href;
   }
 
   .menu-item {
-    /* display: none; */
     visibility: hidden;
     z-index: 5;
     font-family: 'RaglotDemo', sans-serif;
