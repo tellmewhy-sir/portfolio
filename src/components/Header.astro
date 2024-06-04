@@ -72,11 +72,11 @@ const isActive = (href: string) => Astro.url.pathname === href;
         highlightMenuItem(slider, currActive);
         menu.style.pointerEvents = 'auto';
       }
-    }, 500);
 
-    if (!parseInt(nav?.dataset.prev)) {
-      setActiveTab(currActive);
-    }
+      if (!parseInt(nav?.dataset.prev)) {
+        setActiveTab(currActive);
+      }
+    }, 500);
 
     function setActiveTab(item: HTMLElement | null) {
       let nextItemOrder = parseInt(item.dataset.order);
