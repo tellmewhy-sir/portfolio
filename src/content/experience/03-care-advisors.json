@@ -1,0 +1,20 @@
+{
+    "companyName": "Care Advisors",
+    "location": "Chicago, IL",
+    "role": "Front End Web Developer",
+    "url": "https://care-advisors.com",
+    "relatedProjects": [],
+    "summary": "",
+    "tech": [
+        "python",
+        "django",
+        "javascript",
+        "jquery",
+        "react",
+        "vue"
+    ],
+    "yearsActive": {
+        "start": 2016,
+        "end": 2018
+    }
+}

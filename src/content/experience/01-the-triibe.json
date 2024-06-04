@@ -1,0 +1,24 @@
+{
+    "companyName": "The TRiiBE",
+    "location": "Chicago, IL",
+    "role": "Lead Web Developer",
+    "url": "https://thetriibe.com",
+    "relatedProjects": [],
+    "summary": "",
+    "tech": [
+        "wordpress",
+        "php",
+        "javascript",
+        "node",
+        "express",
+        "vue",
+        "react",
+        "nosql",
+        "sql",
+        "aws"
+    ],
+    "yearsActive": {
+        "start": 2017,
+        "end": 2024
+    }
+}

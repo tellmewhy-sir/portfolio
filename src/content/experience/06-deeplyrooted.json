@@ -1,0 +1,20 @@
+{
+    "companyName": "Deeply Rooted Dance Theater",
+    "location": "Chicago, IL",
+    "role": "Webmaster",
+    "url": "https://deeplyrooteddancetheater.org",
+    "relatedProjects": [],
+    "summary": "",
+    "tech": [
+        "wordpress",
+        "php",
+        "javascript",
+        "jquery",
+        "react",
+        "sql"
+    ],
+    "yearsActive": {
+        "start": 2016,
+        "end": 2020
+    }
+}

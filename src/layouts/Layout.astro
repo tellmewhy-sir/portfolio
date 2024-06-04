@@ -2,6 +2,9 @@
 import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import { fade } from 'astro:transitions';
+import '@fontsource/dm-mono/300.css';
+import '@fontsource/dm-mono/400.css';
+import '@fontsource/dm-mono/500.css';
 
 interface Props {
   title: string;
@@ -72,6 +75,10 @@ const { title } = Astro.props;
           Bitstream Vera Sans Mono,
           Courier New,
           monospace;
+      }
+
+      .heading {
+        font-family: 'DM Mono', monospace;
       }
     </style>
   </body>

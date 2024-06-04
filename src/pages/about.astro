@@ -2,11 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import { fade, slide } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+import { getEntries } from 'astro:content';
+
+const experienceItems = await getCollection('experience');
 ---
 
 <Layout title="About">
   <main class="container">
-    <h1>About</h1>
-    <p>This is the about page.</p>
+    <h1 class="heading text-3xl font-medium">Work Experience</h1>
+
+    <div>
+      {
+        experienceItems.map(({ data }) => (
+          <div class="experience>">
+            <h2 class="heading">{data.companyName}</h2>
+          </div>
+        ))
+      }
+    </div>
   </main>
 </Layout>

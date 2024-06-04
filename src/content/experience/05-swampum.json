@@ -1,0 +1,18 @@
+{
+    "companyName": "Swampum",
+    "location": "Chicago, IL",
+    "role": "Front End Web Developer",
+    "url": "https://swampum.com",
+    "relatedProjects": [],
+    "summary": "",
+    "tech": [
+        "php",
+        "sql",
+        "javascript",
+        "vue"
+    ],
+    "yearsActive": {
+        "start": 2014,
+        "end": 2019
+    }
+}
