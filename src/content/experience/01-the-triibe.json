@@ -3,7 +3,13 @@
     "location": "Chicago, IL",
     "role": "Lead Web Developer",
     "url": "https://thetriibe.com",
-    "relatedProjects": [],
+    "relatedProjects": [
+        "the-scene",
+        "black-caucus",
+        "black-summer-timeline",
+        "ward-lookup",
+        "chi-vote"
+    ],
     "summary": "",
     "tech": [
         "wordpress",
