@@ -24,6 +24,7 @@ const projects = defineCollection({
         description: z.string(),
         tech: z.array(z.string()),
         url: z.string().url(),
+        category: z.string(),
     })
 })
 
