@@ -9,13 +9,17 @@ let menuLinks = [
     href: '/about',
   },
   {
+    title: 'exp',
+    href: '/experience',
+  },
+  {
     title: 'dev',
     href: '/',
   },
-  // {
-  //   title: 'work',
-  //   href: '/work',
-  // },
+  {
+    title: 'works',
+    href: '/works',
+  },
   {
     title: 'blog',
     href: '/blog',
@@ -84,7 +88,7 @@ const isActive = (href: string) => Astro.url.pathname === href;
 
     function setActiveTab(item: HTMLElement | null) {
       let nextItemOrder = parseInt(item.dataset.order);
-      let currActiveOrder = prevActive ? parseInt(currActive.dataset.order) : 3;
+      let currActiveOrder = prevActive ? parseInt(currActive.dataset.order) : 4;
 
       let itemHeight = currActive.clientHeight + 16;
       let stepsFromBase = nextItemOrder - currActiveOrder;
