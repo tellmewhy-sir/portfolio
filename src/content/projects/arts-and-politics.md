@@ -1,6 +1,6 @@
 ---
 title: "Arts and Politics Plays"
-description: 
+description: ''
 tech: ['wordpress','elementor']
 url: "https://www.artsandpoliticsplays.com/"
 category: "branding"

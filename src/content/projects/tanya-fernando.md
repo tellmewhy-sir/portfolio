@@ -1,7 +1,7 @@
 ---
-title: 'Personal Site'
+title: 'Tanya Fernando'
 description: ''
 tech: ['html','css']
 url: 'https://www.tanyafernando.com/'
-catgegory: "branding"
+category: "branding"
 ---

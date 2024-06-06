@@ -1,12 +1,39 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import { fade } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const groupedProjects = projects.reduce((acc, item) => {
+  let { category } = item.data;
+
+  if (!acc[category]) {
+    acc[category] = [item];
+  } else {
+    acc[category].push(item);
+  }
+
+  return acc;
+}, {});
 ---
 
 <Layout title="Work">
   <main class="container">
-    <h1>Work</h1>
-    <p>This is the works page.</p>
+    <h1 class="heading text-3xl font-medium mb-12">works.</h1>
+    <div>
+      {
+        Object.keys(groupedProjects).map((category) => {
+          return (
+            <section class="mb-12">
+              <h2 class="heading text-2xl mb-4 underline">{category}.</h2>
+              <ul class="flex flex-col gap-2">
+                {groupedProjects[category].map(({ data }) => (
+                  <li class="font-light">{data.title}</li>
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
   </main>
 </Layout>
