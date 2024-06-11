@@ -1,0 +1,31 @@
+---
+import Layout from './Layout.astro';
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={`Works | ${frontmatter.title}`}>
+  <main class="container">
+    <h1 class="heading text-3xl font-medium mb-8">
+      {frontmatter.title}
+    </h1>
+    <ul class="flex gap-4 mb-8">
+      {
+        frontmatter.tech.map((tech) => (
+          <li class="bg-gray-200 p-2 rounded-sm text-sm">{tech}</li>
+        ))
+      }
+    </ul>
+    <div class="mb-8">
+      <slot />
+    </div>
+    <div>
+      <a
+        href={frontmatter.url}
+        target="_blank"
+        class="bg-black text-white rounded-md p-2 hover:bg-gray-500 transition-colors duration-200 ease-in-out"
+      >
+        See it live
+      </a>
+    </div>
+  </main>
+</Layout>
