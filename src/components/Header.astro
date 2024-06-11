@@ -61,18 +61,19 @@ const isActive = (href: string) => Astro.url.pathname === href;
 <script is:inline src="helpers/animation.js"></script>
 
 <script>
-  let header = document.getElementById('header');
-  let nav = document.querySelector('nav');
-  let menu = document.querySelector('.menu');
+  let header: HTMLElement | null =
+    document.getElementById<HTMLElement>('header');
+  let nav: HTMLElement | null = document.querySelector<HTMLElement>('nav');
+  let menu: HTMLElement | null = document.querySelector<HTMLElement>('.menu');
   let menuItems = document.querySelectorAll('.menu-item');
   let prevActive: HTMLElement | null = null;
   let currActive: HTMLElement | null =
     document.querySelector('.menu-item.active');
-  let slider = document.getElementById('slider');
+  let slider = document.getElementById<HTMLElement>('slider');
 
   document.addEventListener('astro:page-load', () => {
     if (window.location.pathname !== '/') {
-      header.classList.add('shrink');
+      header?.classList.add('shrink');
     }
 
     setTimeout(() => {
@@ -81,7 +82,9 @@ const isActive = (href: string) => Astro.url.pathname === href;
         menu.style.pointerEvents = 'auto';
       }
 
-      if (!parseInt(nav?.dataset.prev)) {
+      let prev: number = parseInt(nav.dataset.prev);
+
+      if (!parseInt(nav.dataset.prev)) {
         setActiveTab(currActive);
       }
     }, 500);
