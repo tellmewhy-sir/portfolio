@@ -30,7 +30,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <div
-      class="h-full w-full flex flex-col md:flex-row items-center justify-center"
+      class="h-full w-full flex flex-col md:flex-row items-center justify-center md:min-w-[800px]"
     >
       <Header />
       <div transition:animate="slide">
@@ -67,7 +67,7 @@ const { title } = Astro.props;
       .container {
         margin: auto;
         padding: 1rem;
-        width: 800px;
+        /* width: 800px; */
         max-width: calc(100% - 2rem);
         color: black;
         font-size: 20px;
