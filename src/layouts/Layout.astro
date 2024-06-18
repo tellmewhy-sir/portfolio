@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
+import Navigation from '../components/react/Navigation';
 import { fade, slide } from 'astro:transitions';
 import '@fontsource/dm-mono/300.css';
 import '@fontsource/dm-mono/300-italic.css';
@@ -15,6 +16,35 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
+let menuLinks = [
+  {
+    title: 'dev',
+    href: '/',
+    isHome: true,
+    menuOrder: 1,
+  },
+  {
+    title: 'me',
+    href: '/about',
+    menuOrder: 2,
+  },
+  {
+    title: 'exp',
+    href: '/experience',
+    menuOrder: 3,
+  },
+  {
+    title: 'works',
+    href: '/works',
+    menuOrder: 4,
+  },
+  {
+    title: 'contact',
+    href: '/contact',
+    menuOrder: 5,
+  },
+];
 ---
 
 <!doctype html>
@@ -28,11 +58,12 @@ const { title } = Astro.props;
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body>
+  <body class="relative">
     <div
       class="h-full w-full flex flex-col md:flex-row items-center justify-center md:min-w-[800px]"
     >
-      <Header />
+      <!-- <Header /> -->
+      <Navigation links={menuLinks} client:load transition:persist />
       <div transition:animate="slide">
         <slot />
       </div>

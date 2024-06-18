@@ -1,0 +1,61 @@
+.menu {
+
+  transition: all 0.25s;
+
+  &:hover,
+  .open {
+    .menu-item:not(.active) {
+      /* display: block; */
+      visibility: visible;
+      opacity: 0.5;
+    }
+  }
+
+  .menu-item {
+    cursor: pointer;
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+
+    transition:
+      /* display 0.25s, */
+      opacity 0.25s,
+      visibility 0.25s;
+    transition-behavior: allow-discrete;
+
+    &.active {
+      /* display: block; */
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+@starting-style {
+  .menu-item {
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.slider {
+  position: absolute;
+  transition: all 0.25s;
+  animation: 500ms ease-in 500ms grow;
+  @apply bg-gray-400 rounded-full;
+
+  &.highlighted {
+    animation: none;
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(100%);
+  }
+}
