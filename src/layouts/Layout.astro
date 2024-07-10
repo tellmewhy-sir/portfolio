@@ -111,6 +111,20 @@ let menuLinks = [
 
         @media (max-width: 768px) {
           margin-top: 12rem;
+          &::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12rem;
+            background: linear-gradient(
+              360deg,
+              rgba(217, 217, 217, 0) 0%,
+              #ffffff 60%
+            );
+            z-index: 10;
+          }
         }
       }
 

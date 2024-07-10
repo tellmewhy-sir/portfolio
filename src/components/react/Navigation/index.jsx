@@ -31,10 +31,10 @@ export default function Navigation({ links }) {
     let w = item.clientWidth;
     let h = item.offsetHeight;
 
-    highlightRef.current.style.left = `${x}px`;
-    highlightRef.current.style.top = `${y}px`;
-    highlightRef.current.style.width = `${w}px`;
-    highlightRef.current.style.height = `${h}px`;
+    highlightRef.current.style.left = `${x - 8}px`;
+    highlightRef.current.style.top = `${y - 8}px`;
+    highlightRef.current.style.width = `${w + 24}px`;
+    highlightRef.current.style.height = `${h + 12}px`;
   };
 
   const handleClick = (e, link) => {
@@ -46,6 +46,7 @@ export default function Navigation({ links }) {
   };
 
   const handleMenuButtonClick = () => {
+    if (window.screen.width > 768) return;
     setMenuOpen(!menuOpen);
   }
 

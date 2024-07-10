@@ -2,13 +2,17 @@
   @media (max-width: 768px) {
     nav {
       position: fixed;
-      top: 0;
-      right: 0;
+      top: 1rem;
+      right: 1rem;
       padding: 2rem;
       z-index: 50;
+      transform: scale(0.5);
+      transform-origin: top right;
 
       &:has(.menu.open) {
         top: 10rem;
+            transform: scale(0.5) translateX(0);
+
       }
     }
   }
@@ -35,6 +39,18 @@ nav {
   transition: all 0.25s;
   view-transition-name: nav;
   z-index: 20;
+  font-family: "RaglotDemo", sans-serif;
+  font-size: 2rem;
+  transform: translateX(15%);
+  
+  @media (min-width: 768px) {
+    transform: translateX(0);
+  }
+
+  &:has(.menu.open) {
+    transform: translateX(0);
+    
+  }
 }
 
 .menu {
@@ -86,7 +102,7 @@ nav {
   width: 100%;
   height: 100%;
   opacity: 0;
-  background: linear-gradient(90deg, rgba(217, 217, 217, 0) 0%, #FFFFFF 60%);;
+  background: linear-gradient(90deg, rgba(217, 217, 217, 0) 0%, #FFFFFF 30%);;
   z-index: 10;
   transition: all 0.25s;
   view-transition-name: overlay;
