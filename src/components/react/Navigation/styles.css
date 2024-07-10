@@ -16,9 +16,6 @@
 }
 
 
-
-
-
 .menu-btn::before {
   content: "";
   position: absolute;
@@ -45,7 +42,6 @@ nav {
 
   &.open {
     .menu-item:not(.active) {
-      /* display: block; */
       visibility: visible;
       opacity: 0.5;
     }
@@ -54,7 +50,6 @@ nav {
   @media (min-width: 768px) {
     &:hover {
       .menu-item:not(.active) {
-        /* display: block; */
         visibility: visible;
         opacity: 0.5;
       }
@@ -63,17 +58,14 @@ nav {
 
   .menu-item {
     cursor: pointer;
-    /* display: none; */
     visibility: hidden;
     opacity: 0;
     z-index: 5;
 
-    transition:
-      /* display 0.25s, */ opacity 0.25s, visibility 0.25s;
+    transition: opacity 0.25s, visibility 0.25s;
     transition-behavior: allow-discrete;
 
     &.active {
-      /* display: block; */
       visibility: visible;
       opacity: 1;
     }
@@ -82,7 +74,6 @@ nav {
 
 @starting-style {
   .menu-item {
-    /* display: none; */
     visibility: hidden;
     opacity: 0;
   }
