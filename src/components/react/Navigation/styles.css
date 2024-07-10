@@ -1,13 +1,63 @@
-.menu {
+.not-home {
+  @media (max-width: 768px) {
+    nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 2rem;
+      z-index: 50;
 
+      &:has(.menu.open) {
+        top: 10rem;
+      }
+    }
+  }
+
+}
+
+
+
+
+
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom:0;
+  width: 100%;
+  z-index: -1;
+  transition: all 0.25s;
+  animation: 500ms ease-in 500ms grow;
+  @apply bg-gray-400 rounded-full md:hidden;
+}
+
+
+nav {
+  transition: all 0.25s;
+  view-transition-name: nav;
+  z-index: 20;
+}
+
+.menu {
   transition: all 0.25s;
 
-  &:hover,
-  .open {
+  &.open {
     .menu-item:not(.active) {
       /* display: block; */
       visibility: visible;
       opacity: 0.5;
+    }
+  }
+
+  @media (min-width: 768px) {
+    &:hover {
+      .menu-item:not(.active) {
+        /* display: block; */
+        visibility: visible;
+        opacity: 0.5;
+      }
     }
   }
 
@@ -19,9 +69,7 @@
     z-index: 5;
 
     transition:
-      /* display 0.25s, */
-      opacity 0.25s,
-      visibility 0.25s;
+      /* display 0.25s, */ opacity 0.25s, visibility 0.25s;
     transition-behavior: allow-discrete;
 
     &.active {
@@ -37,6 +85,28 @@
     /* display: none; */
     visibility: hidden;
     opacity: 0;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(217, 217, 217, 0) 0%, #FFFFFF 60%);;
+  z-index: 10;
+  transition: all 0.25s;
+  view-transition-name: overlay;
+
+  &.open {
+    right: 0;
+    opacity: 1;
+  }
+
+  @media (min-width: 768px) {
+    display: none;
   }
 }
 

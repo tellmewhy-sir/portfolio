@@ -58,12 +58,17 @@ let menuLinks = [
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body class="relative">
+  <body class={`relative ${title !== 'David Elutilo' ? 'not-home' : ''}`}>
     <div
       class="h-full w-full flex flex-col md:flex-row items-center justify-center md:min-w-[800px]"
     >
       <!-- <Header /> -->
-      <Navigation links={menuLinks} client:load transition:persist />
+      <Navigation
+        links={menuLinks}
+        client:load
+        transition:persist
+        transition:name="nav"
+      />
       <div transition:animate="slide">
         <slot />
       </div>
@@ -103,6 +108,12 @@ let menuLinks = [
         color: black;
         font-size: 20px;
         line-height: 1.6;
+      }
+
+      .content {
+        @media (max-width: 768px) {
+          margin-top: 14rem;
+        }
       }
       code {
         font-family:
