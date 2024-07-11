@@ -79,9 +79,9 @@ export default function Navigation({ links }) {
       <nav className="flex items-start relative" ref={navRef}>
         <button 
             ref={nameRef}
-            className='menu-btn relative'
+            className={`menu-btn relative z-20 ${prevActive ? 'highlighted' : ''}`}
             onClick={handleMenuButtonClick}>
-                <span className='z-10'>delutilo.</span>
+                <span>delutilo.</span>
             </button>
         <ul
           className={`menu flex flex-col gap-4 items-start z-10 relative ${

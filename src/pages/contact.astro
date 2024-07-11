@@ -4,7 +4,29 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Contact">
   <main class="container">
-    <h1>Contact</h1>
-    <p>This is the contact page.</p>
+    <h1 class="heading text-3xl font-medium mb-12">contact.</h1>
+    <p class="heading text-xl mb-12">Let's work together ✨</p>
+    <ul class="heading flex flex-col gap-4">
+      <li>
+        <a target="_blank" href="mailto:delutilo.dev@gmail.com">Email</a>
+      </li>
+      <li>
+        <a target="_blank" href="https://twitter.com/_tellmewye">"Twitter"</a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.linkedin.com/in/david-elutilo/"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/tellmewhy-sir/">Github</a>
+      </li>
+    </ul>
   </main>
 </Layout>
+
+<style>
+  a {
+    @apply underline;
+  }
+</style>

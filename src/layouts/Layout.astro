@@ -62,7 +62,7 @@ let menuLinks = [
     class={`relative ${title !== 'David Elutilo' ? 'not-home md:h-screen' : 'h-screen'}`}
   >
     <div
-      class="h-full w-full flex flex-col md:flex-row items-center justify-center md:min-w-[800px]"
+      class="h-full w-full flex flex-col md:flex-row items-center justify-center md:min-w-[800px] gap-4"
     >
       <!-- <Header /> -->
       <Navigation
@@ -103,8 +103,8 @@ let menuLinks = [
       }
       .container {
         margin: auto;
-        padding: 1rem;
-        max-width: max(calc(100% - 2rem), 800px);
+        padding: 2rem;
+        width: clamp(320px, 100%, 800px);
         color: black;
         font-size: 20px;
         line-height: 1.6;

@@ -20,18 +20,27 @@
 }
 
 
-.menu-btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom:0;
-  width: 100%;
-  z-index: -1;
-  transition: all 0.25s;
-  animation: 500ms ease-in 500ms grow;
-  @apply bg-gray-400 rounded-full md:hidden;
+.menu-btn {
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom:0;
+    width: 100%;
+    z-index: -1;
+    transition: all 0.25s;
+    animation: 500ms ease-in 500ms grow;
+    @apply bg-gray-400 rounded-full md:hidden;
+  }
+
+  &.highlighted {
+    &::before {
+      animation: none;
+    }
+  }
 }
 
 
