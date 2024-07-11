@@ -14,6 +14,7 @@ export default function Navigation({ links }) {
 
   useEffect(() => {
     if (!navRef.current) return;
+
     let activeItem = navRef.current.querySelector('.active');
 
     if (window.screen.width > 768) {
@@ -21,8 +22,8 @@ export default function Navigation({ links }) {
     } else {
       highlightMenuItem(nameRef.current);
     }
-    let menuCenter = navRef.current.offsetTop;
-    setMenuCenter(menuCenter);
+    // let menuCenter = navRef.current.offsetTop;
+    // setMenuCenter(menuCenter);
   }, [currActive, setCurrActive]);
 
   const highlightMenuItem = (item) => {
@@ -117,13 +118,6 @@ export default function Navigation({ links }) {
             ref={highlightRef}
           ></span>
         </ul>
-        {/* {
-                    !menuOpen && (
-                        <div
-                            className="absolute top-0 left-0 right-0 bottom-0 md:hidden z-30"
-                            onClick={() => setMenuOpen(true)}></div>
-                    )
-                } */}
       </nav>
       {(
         <div className={`overlay ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(false)}></div>

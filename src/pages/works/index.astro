@@ -39,3 +39,25 @@ const groupedProjects = projects.reduce((acc, item) => {
     </div>
   </main>
 </Layout>
+
+<style scoped>
+  li {
+    transition: all 0.3s;
+
+    &::before {
+      content: '→';
+      opacity: 0;
+      transform: translateX(-1rem);
+      transition: all 0.3s;
+      margin-left: -1.5rem;
+    }
+    &:hover {
+      &::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      transform: translate(1rem);
+      text-decoration: underline;
+    }
+  }
+</style>
