@@ -1,0 +1,153 @@
+.not-home {
+  @media (max-width: 768px) {
+    nav {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 2rem;
+      z-index: 50;
+      transform: scale(0.5);
+      transform-origin: top right;
+
+      &:has(.menu.open) {
+        top: 10rem;
+            transform: scale(0.5) translateX(0);
+
+      }
+    }
+  }
+
+}
+
+
+.menu-btn {
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom:0;
+    width: 100%;
+    z-index: -1;
+    transition: all 0.25s;
+    transition-behavior: allow-discrete;
+    animation: 500ms ease-in 500ms grow;
+    @apply bg-gray-400 rounded-full md:hidden;
+  }
+
+  &.highlighted {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+
+nav {
+  transition: all 0.25s;
+  view-transition-name: nav;
+  z-index: 20;
+  font-family: "RaglotDemo", sans-serif;
+  font-size: 2rem;
+  transform: translateX(15%);
+  
+  @media (min-width: 768px) {
+    transform: translateX(0);
+  }
+
+  &:has(.menu.open) {
+    transform: translateX(0);
+    
+  }
+}
+
+.menu {
+  transition: all 0.25s;
+
+  &.open {
+    .menu-item:not(.active) {
+      visibility: visible;
+      opacity: 0.5;
+    }
+  }
+
+  @media (min-width: 768px) {
+    &:hover {
+      .menu-item:not(.active) {
+        visibility: visible;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .menu-item {
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+
+    transition: opacity 0.25s, visibility 0.25s;
+    transition-behavior: allow-discrete;
+
+    /* &:hover {
+      opacity: 1;
+      color: white
+    } */
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+@starting-style {
+  .menu-item {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(217, 217, 217, 0) 0%, #FFFFFF 30%);;
+  z-index: 10;
+  transition: all 0.25s;
+  view-transition-name: overlay;
+
+  &.open {
+    right: 0;
+    opacity: 1;
+  }
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.slider {
+  position: absolute;
+  transition: all 0.25s;
+  animation: 500ms ease-in 500ms grow;
+  @apply bg-gray-400 rounded-full;
+
+  &.highlighted {
+    animation: none;
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(100%);
+  }
+}

@@ -35,21 +35,25 @@ const isActive = (href: string) => Astro.url.pathname === href;
 
 <header
   id="header"
-  class="header flex items-center"
+  class="header relative px-4 flex flex-col md:flex-row items-end md:items-center justify-center w-full"
   transition:persist
   transition:name="header"
 >
-  <h1 id="title" class="title">delutilo.</h1>
-  <nav data-prev={0}>
+  <h1 id="title" class="title absolute">
+    <span>delutilo.</span>
+  </h1>
+  <!-- <button class="menu-item active md:hidden" id="nav-trigger">dev</button> -->
+  <nav data-prev={0} class="absolute md:relative md:-ml-4 z-10">
     <ul transition:name="menu" class={`menu ${isEven ? 'is-even' : ''}`}>
       {
         menuLinks.map((link, index) => (
           <li
-            class={`menu-item ${isActive(link.href) ? 'active' : ''}`}
+            class={`menu-item ${isActive(link.href) ? 'active' : ''} m-0 md:mx-4`}
             data-order={index + 1}
             data-title={link.title}
           >
-            <a href={link.href}>{link.title}</a>
+            {/* <a href={link.href}>{link.title}</a> */}
+            <span data-href={link.href}>{link.title}</span>
           </li>
         ))
       }
@@ -61,8 +65,11 @@ const isActive = (href: string) => Astro.url.pathname === href;
 <script is:inline src="helpers/animation.js"></script>
 
 <script>
+  import { navigate } from 'astro:transitions/client';
+
   let header: HTMLElement | null =
     document.getElementById<HTMLElement>('header');
+  let title: HTMLElement | null = document.getElementById<HTMLElement>('title');
   let nav: HTMLElement | null = document.querySelector<HTMLElement>('nav');
   let menu: HTMLElement | null = document.querySelector<HTMLElement>('.menu');
   let menuItems = document.querySelectorAll('.menu-item');
@@ -70,10 +77,22 @@ const isActive = (href: string) => Astro.url.pathname === href;
   let currActive: HTMLElement | null =
     document.querySelector('.menu-item.active');
   let slider = document.getElementById<HTMLElement>('slider');
+  let navTrigger = document.getElementById<HTMLElement>('nav-trigger');
 
   document.addEventListener('astro:page-load', () => {
     if (window.location.pathname !== '/') {
       header?.classList.add('shrink');
+    } else if (window.innerWidth < 768) {
+      // get center of window
+      // get nav position
+      let navRect = nav?.getBoundingClientRect();
+      console.log(navRect?.top, title?.clientHeight);
+      // place title at right above nav
+      title.style.top = `-${currActive?.clientHeight + currActive?.clientHeight / 2}px`;
+    }
+
+    if (window.location.pathname === '/') {
+      header?.classList.remove('shrink');
     }
 
     setTimeout(() => {
@@ -116,28 +135,46 @@ const isActive = (href: string) => Astro.url.pathname === href;
     }
 
     menuItems.forEach((item) => {
-      item.addEventListener('click', () => {
-        menu.style.pointerEvents = 'none';
-        if (item.classList.contains('active')) return;
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
 
-        setActiveTab(item);
+        // setActiveTab(item);
 
         slider.classList.add('highlighted');
 
         if (item.dataset.title === 'dev') {
           header?.classList.remove('shrink');
         } else {
-          header?.classList.add('shrink');
+          // header?.classList.add('shrink');
+        }
+        if (window.innerWidth < 768) {
+          if (menu?.classList.contains('open')) {
+            const link = item.querySelector('span');
+            navigate(link?.dataset.href || '/');
+          } else {
+            menu?.classList.add('open');
+          }
+
+          // document.body.addEventListener('click', (e) => {
+          //   if (menu?.classList.contains('open')) {
+          //     menu?.classList.remove('open');
+          //   }
+          // });
+        } else {
+          menu.style.pointerEvents = 'none';
         }
       });
 
-      item.addEventListener('mouseover', () => {
-        highlightMenuItem(slider, item);
-      });
+      // if window width is less than 768px
+      if (window.innerWidth > 768) {
+        item.addEventListener('mouseover', () => {
+          highlightMenuItem(slider, item);
+        });
+      }
     });
 
     nav.addEventListener('mouseleave', () => {
-      highlightMenuItem(slider, currActive);
+      // highlightMenuItem(slider, currActive);
     });
   });
 </script>
@@ -152,9 +189,18 @@ const isActive = (href: string) => Astro.url.pathname === href;
   }
 
   nav {
-    margin-left: -2rem;
-    position: relative;
+    /* margin-left: -2rem; */
     transition: all 0.25s;
+  }
+
+  .title {
+    transition: all 0.5s;
+
+    span {
+      display: block;
+      transform-style: preserve-3d;
+      transform: translateZ(-30px);
+    }
   }
 
   @starting-style {
@@ -162,12 +208,29 @@ const isActive = (href: string) => Astro.url.pathname === href;
       visibility: hidden;
       opacity: 0;
     }
+
+    /* .title {
+      visibility: visible;
+      opacity: 1;
+    } */
   }
 
   .header {
     transition: all 0.25s;
     &.shrink {
       transform: scale(0.5);
+    }
+
+    &:has(.open) {
+      .title {
+        perspective: 400px;
+        perspective-origin: center;
+        /* display: none; */
+        /* visibility: hidden; */
+        opacity: 0.1;
+        /* transition: all 0.25s; */
+        filter: blur(5px);
+      }
     }
   }
 
@@ -176,10 +239,20 @@ const isActive = (href: string) => Astro.url.pathname === href;
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
-    &:hover {
+
+    @media (max-width: 768px) {
+      align-items: flex-end;
+    }
+
+    &:hover,
+    .open {
       .menu-item:not(.active) {
         visibility: visible;
+        /* display: block; */
         opacity: 0.5;
+        /* @media (max-width: 768px) {
+          opacity: 1;
+        } */
       }
     }
 
@@ -189,12 +262,13 @@ const isActive = (href: string) => Astro.url.pathname === href;
   }
 
   .menu-item {
+    /* display: none; */
     visibility: hidden;
     z-index: 5;
     font-family: 'RaglotDemo', sans-serif;
     font-size: 4rem;
     line-height: 1;
-    margin: 0 1rem;
+    /* margin: 0 1rem; */
     cursor: pointer;
     transition:
       opacity 0.25s,
@@ -211,6 +285,13 @@ const isActive = (href: string) => Astro.url.pathname === href;
     &.active {
       visibility: visible;
       opacity: 1;
+      /* display: block; */
+    }
+
+    &:not(.active) {
+      @media (max-width: 768px) {
+        /* pointer-events: none; */
+      }
     }
   }
 
