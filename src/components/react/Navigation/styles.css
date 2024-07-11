@@ -32,6 +32,7 @@
     width: 100%;
     z-index: -1;
     transition: all 0.25s;
+    transition-behavior: allow-discrete;
     animation: 500ms ease-in 500ms grow;
     @apply bg-gray-400 rounded-full md:hidden;
   }
@@ -89,6 +90,11 @@ nav {
 
     transition: opacity 0.25s, visibility 0.25s;
     transition-behavior: allow-discrete;
+
+    /* &:hover {
+      opacity: 1;
+      color: white
+    } */
 
     &.active {
       visibility: visible;
