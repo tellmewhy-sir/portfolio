@@ -5,26 +5,27 @@ export default function Navigation({ links }) {
   const [prevSteps, setPrevSteps] = useState(0);
   const [prevActive, setPrevActive] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [currActive, setCurrActive] = useState({ title: 'dev', href: '/' });
-  const [menuCenter, setMenuCenter] = useState(1);
+  const [currActive, setCurrActive] = useState(null);
   const nameRef = useRef(null);
   const navRef = useRef(null);
   const menuRef = useRef(null);
   const menuActiveRef = useRef(null);
-  const highlightRef = useRef(null);
 
   useEffect(() => {
     if (!navRef.current) return;
 
+    if (!currActive) {
+      let currentPage = links.find((link) => link.href === window.location.pathname);
+      setCurrActive(currentPage);
+    }
+
     let activeItem = navRef.current.querySelector('.active');
 
-    if (window.screen.width > 768) {
-      // highlightMenuItem(activeItem);
+    if (window.screen.width > 768 && activeItem) {
+      highlightMenuItem(activeItem);
     } else {
       // highlightMenuItem(nameRef.current);
     }
-    // let menuCenter = navRef.current.offsetTop;
-    // setMenuCenter(menuCenter);
   }, [currActive, setCurrActive]);
 
   const highlightMenuItem = (item) => {
@@ -84,7 +85,12 @@ export default function Navigation({ links }) {
 
   return (
     <>
-      <nav className="flex items-start relative" ref={navRef}>
+      <nav
+        className="flex items-start relative"
+        ref={navRef}
+        onMouseLeave={() =>
+          highlightMenuItem(navRef.current.querySelector('.active'))
+        }>
         <button 
           ref={nameRef}
           className={`menu-btn absolute z-30 ${prevActive ? 'highlighted' : ''}`}
@@ -102,7 +108,7 @@ export default function Navigation({ links }) {
             .map((link) => (
               <li
                 className={`menu-item ${
-                  link.title === currActive.title ? 'active' : ''
+                  link.title === currActive?.title ? 'active' : ''
                 }`}
                 key={link.title}
               >
@@ -112,9 +118,6 @@ export default function Navigation({ links }) {
                   data-order={link.menuOrder}
                   onClick={(e) => handleClick(e, link)}
                   onMouseOver={(e) => highlightMenuItem(e.target)}
-                  // onMouseLeave={() =>
-                  //   highlightMenuItem(navRef.current.querySelector('.active'))
-                  // }
                 >
                   {link.title}
                 </a>
@@ -139,10 +142,6 @@ export default function Navigation({ links }) {
                   className="block"
                   data-order={link.menuOrder}
                   onClick={(e) => handleClick(e, link)}
-                  // onMouseOver={(e) => highlightMenuItem(e.target)}
-                  // onMouseLeave={() =>
-                  //   highlightMenuItem(navRef.current.querySelector('.active'))
-                  // }
                 >
                   {link.title}
                 </a>
