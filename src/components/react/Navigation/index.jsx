@@ -85,12 +85,12 @@ export default function Navigation({ links }) {
   return (
     <>
       <nav className="flex items-start relative" ref={navRef}>
-        {/* <button 
-            ref={nameRef}
-            className={`menu-btn relative z-20 ${prevActive ? 'highlighted' : ''}`}
-            onClick={handleMenuButtonClick}>
-                <span>delutilo.</span>
-            </button> */}
+        <button 
+          ref={nameRef}
+          className={`menu-btn absolute z-30 ${prevActive ? 'highlighted' : ''}`}
+          onClick={handleMenuButtonClick}>
+              <span>delutilo.</span>
+          </button>
         <ul
           className={`menu flex flex-col gap-4 items-start z-10 relative pr-4 pl-4 ${
             menuOpen ? 'open' : ''
