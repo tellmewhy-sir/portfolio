@@ -1,4 +1,5 @@
 ---
+import Timeline from '../components/react/Timeline';
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
@@ -9,7 +10,9 @@ const experienceItems = await getCollection('experience');
   <main class="container">
     <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
 
-    <ul class="list-none flex flex-col gap-12">
+    <Timeline items={experienceItems} client:load />
+
+    <!-- <ul class="list-none flex flex-col gap-12">
       {
         experienceItems.map(({ data }) => (
           <li class="experience flex flex-col md:flex-row items-start gap-4">
@@ -32,6 +35,6 @@ const experienceItems = await getCollection('experience');
           </li>
         ))
       }
-    </ul>
+    </ul> -->
   </main>
 </Layout>
