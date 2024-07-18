@@ -56,7 +56,13 @@ export default function Timeline({ items }) {
                         onMouseEnter={handleYearHover}
                         style={{ gridRow: `1 /span 7`, gridColumn: `${12*i+1} / span 12`}}
                         data-year={year}>
-                            {/* {year} */}
+                            {
+                                ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                                .map((month, i) => (
+                                    <div key={month} className="month-block" data-month={month} style={{gridRow: `1 / span 7`, gridColumn: `${i+1} / span 1`}}>
+                                    </div>
+                                ))
+                            }
                         </div>
                 ))
             }

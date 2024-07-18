@@ -39,7 +39,9 @@
         }
 
         .year-block {
-            @apply border-b-2 border-gray-200;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            @apply border-r-2 border-gray-200;
         }
     }
 
