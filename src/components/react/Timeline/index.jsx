@@ -67,13 +67,6 @@ export default function Timeline({ items }) {
                 ))
             }
             </div>
-            {/* <div className="grid timeline-labels">
-                {
-                    Array.from({length: 10}, (_, i) => i+2014).map((year) => (
-                        <div key={year} className="timeline-label">{year}</div>
-                    ))
-                }
-            </div> */}
             <div className="line z-50" ref={lineRef}>
                 <span className="p-2 block bg-white w-fit">{currentYear}</span>
             </div>
