@@ -2,17 +2,14 @@ import * as d3 from 'd3';
 import React, { useEffect, useMemo } from 'react'
 import './styles.css'
 
-const YearAxis = () => {
+const YearAxis = ({ scale }) => {
     const dateTicks = useMemo(() => {
-        const yearsScale = d3.scaleTime()
-            .domain([new Date(2025,1,1), new Date(2014, 6, 30)])
-            .range([0, 800])
 
-        return yearsScale.ticks().map((date) => {
+        return scale.ticks().map((date) => {
             return {
                 date,
                 year: date.getFullYear(),
-                xOffset:yearsScale(date)
+                xOffset:scale(date)
             }
         })
     })
@@ -42,30 +39,31 @@ const YearAxis = () => {
 }
 
 const TimelineSpans = ({ data, scale }) => {
-    const dateFormat = d3.timeParse('%Y-%M')
+    const dateFormat = d3.timeParse('%Y-%m')
 
     return (
         <g>
             {
                 data.map(({id, data}, i) => (
                     <>
-                    <rect
-                        key={id}
-                        x={scale(dateFormat(data.yearsActive.end))}
-                        y={i*40+8}
-                        height={30}
-                        fill='currentColor'
-                        width={Math.abs(scale(dateFormat(data.yearsActive.end)) - scale(dateFormat(data.yearsActive.start)))}
-                    />
-                    <text
-                        x={scale(dateFormat(data.yearsActive.end))}
-                        y={i*40+8}
-                        dy={20}
-                        dx={5}
-                        fill='white'
-                        fontSize='12px'>
-                        {data.companyName}
-                        </text>
+                        <rect
+                            key={id}
+                            x={scale(dateFormat(data.yearsActive.end))}
+                            y={i*40+8}
+                            height={30}
+                            fill='currentColor'
+                            width={Math.abs(scale(dateFormat(data.yearsActive.end)) - scale(dateFormat(data.yearsActive.start)))}
+                        />
+                        <text
+                            key={`${id}-text`}
+                            x={scale(dateFormat(data.yearsActive.end))}
+                            y={i*40+8}
+                            dy={20}
+                            dx={5}
+                            fill='white'
+                            fontSize='12px'>
+                            {data.companyName}
+                            </text>
                     </>
                 ))
             }
@@ -83,7 +81,7 @@ export default function Timeline({ items }) {
         <div className="timeline-wrapper">
             <svg viewBox='0 -100 800 400'>
                 <TimelineSpans data={items} scale={yearsScale} />
-                <YearAxis />
+                <YearAxis scale={yearsScale} />
             </svg>
         </div>
     )
