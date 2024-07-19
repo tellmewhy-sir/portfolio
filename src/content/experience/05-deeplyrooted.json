@@ -4,6 +4,7 @@
     "role": "Webmaster",
     "url": "https://deeplyrooteddancetheater.org",
     "relatedProjects": [],
+    "type": "freelance",
     "summary": "",
     "tech": [
         "wordpress",
@@ -14,7 +15,7 @@
         "sql"
     ],
     "yearsActive": {
-        "start": 2016,
-        "end": 2020
+        "start": "2016-01",
+        "end": "2020-04"
     }
 }

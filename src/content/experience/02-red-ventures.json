@@ -2,6 +2,7 @@
     "companyName": "Red Ventures (The Points Guy)",
     "location": "Austin, TX",
     "role": "Front End Engineer",
+    "type": "full-time",
     "url": "https://www.redventures.com/",
     "relatedProjects": [],
     "summary": "",
@@ -14,7 +15,7 @@
         "sql"
     ],
     "yearsActive": {
-        "start": 2019,
-        "end": 2021
+        "start": "2019-01",
+        "end": "2021-01"
     }
 }

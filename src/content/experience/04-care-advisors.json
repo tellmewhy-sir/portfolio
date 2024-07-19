@@ -3,6 +3,7 @@
     "location": "Chicago, IL",
     "role": "Front End Web Developer",
     "url": "https://care-advisors.com",
+    "type": "full-time",
     "relatedProjects": [],
     "summary": "",
     "tech": [
@@ -14,7 +15,7 @@
         "vue"
     ],
     "yearsActive": {
-        "start": 2016,
-        "end": 2018
+        "start": "2016-02",
+        "end": "2018-07"
     }
 }

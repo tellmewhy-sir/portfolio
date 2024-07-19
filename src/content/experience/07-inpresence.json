@@ -3,13 +3,14 @@
     "location": "Chicago, IL",
     "role": "Jr. Web Developer",
     "relatedProjects": [],
+    "type": "full-time",
     "summary": "",
     "tech": [
         "drupal",
         "javascript"
     ],
     "yearsActive": {
-        "start": 2014,
-        "end": 2016
+        "start": "2014-08",
+        "end": "2016-01"
     }
 }

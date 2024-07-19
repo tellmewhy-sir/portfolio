@@ -1,10 +1,10 @@
 
 /* 1 column = 3 months */
 .timeline {
-    width: 700px;
+    /* width: 700px; */
     overflow-y: scroll;
     position: relative;
-    /* width: fit-content; */
+    width: fit-content;
 
     /* &::after {
         content: '';
