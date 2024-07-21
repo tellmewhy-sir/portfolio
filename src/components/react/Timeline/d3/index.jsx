@@ -80,7 +80,10 @@ const TickTracker = ({ height, scale, parentEl }) => {
 
   useEffect(() => {
     if (!parentEl.current) return;
-    setOffset(x - parentEl.current.getBoundingClientRect().left);
+    const { left } = parentEl.current.getBoundingClientRect();
+    let newOffset = x - left;
+    if (newOffset < 0) newOffset = 0;
+    setOffset(newOffset);
 
   }, [x, y, offset])
   return (
