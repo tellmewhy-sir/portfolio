@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './styles.css';
+import { useMousePosition } from '../../hooks';
 
 const TimelineAxis = ({ scale }) => {
   const dateTicks = useMemo(() => {
@@ -71,17 +72,40 @@ const TimelineSpans = ({ data, scale }) => {
   );
 };
 
+const TickTracker = ({ height, scale, parentEl }) => {
+  const formatMonth = d3.timeFormat('%b');
+  const [offset, setOffset] = useState(0);
+
+  const {x,y} = useMousePosition();
+
+  useEffect(() => {
+    if (!parentEl.current) return;
+    setOffset(x - parentEl.current.getBoundingClientRect().left);
+
+  }, [x, y, offset])
+  return (
+    <g>
+      <line x1={offset} x2={offset} y1={0} y2={height} stroke="currentColor" strokeWidth={1}/>
+      <text x={offset}>
+        {`${formatMonth(scale.invert(offset))} ${scale.invert(offset).getFullYear()}`}
+      </text>
+    </g>
+  )
+}
+
 export default function Timeline({ items }) {
+  const timelineEl = useRef(null);
   const yearsScale = d3
     .scaleTime()
     .domain([new Date(2025, 1, 1), new Date(2014, 6, 30)])
     .range([0, 800]);
 
   return (
-    <div className="timeline-wrapper relative w-full">
+    <div className="timeline-wrapper relative w-full" ref={timelineEl}>
       <svg viewBox="0 -100 800 400">
         <TimelineSpans data={items} scale={yearsScale} />
         <TimelineAxis scale={yearsScale} />
+        <TickTracker height={400} scale={yearsScale} parentEl={timelineEl}/>
       </svg>
     </div>
   );
