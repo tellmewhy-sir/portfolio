@@ -2,11 +2,12 @@
     "companyName": "edx",
     "location": "Remote",
     "role": "Coding Bootcamp Online Tutor",
+    "type": "part-time",
     "relatedProjects": [],
     "summary": "",
     "tech": [],
     "yearsActive": {
-        "start": 2018,
-        "end": 2024
+        "start": "2018-08",
+        "end": "2024-02"
     }
 }

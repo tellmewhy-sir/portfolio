@@ -2,6 +2,7 @@
     "companyName": "The TRiiBE",
     "location": "Chicago, IL",
     "role": "Lead Web Developer",
+    "type": "full-time",
     "url": "https://thetriibe.com",
     "relatedProjects": [
         "the-scene",
@@ -24,7 +25,7 @@
         "aws"
     ],
     "yearsActive": {
-        "start": 2021,
-        "end": 2024
+        "start": "2021-02",
+        "end": "2024-05"
     }
 }

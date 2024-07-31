@@ -6,13 +6,14 @@ const experience = defineCollection({
         companyName: z.string(),
         location: z.string(),
         role: z.string(),
+        type: z.string(),
         url: z.string().url().optional(),
         summary: z.string(),
         tech: z.array(z.string()),
         relatedProjects: z.array(reference("projects")),
         yearsActive: z.object({
-            start: z.number(),
-            end: z.number(),
+            start: z.string(),
+            end: z.string(),
         }),
     })
 })

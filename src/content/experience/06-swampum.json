@@ -3,6 +3,7 @@
     "location": "Chicago, IL",
     "role": "Front End Web Developer",
     "url": "https://swampum.com",
+    "type": "full-time",
     "relatedProjects": [],
     "summary": "",
     "tech": [
@@ -12,7 +13,7 @@
         "vue"
     ],
     "yearsActive": {
-        "start": 2014,
-        "end": 2019
+        "start": "2014-08",
+        "end": "2019-07"
     }
 }
