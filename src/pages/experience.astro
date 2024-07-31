@@ -10,6 +10,8 @@ const experienceItems = await getCollection('experience');
 <Layout title="Experience">
   <main class="container">
     <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
-    <Timeline items={experienceItems} client:load />
+    <div class="h-[500px]">
+      <Timeline items={experienceItems} client:load />
+    </div>
   </main>
 </Layout>
