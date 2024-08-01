@@ -1,0 +1,34 @@
+---
+import { timeFormat, timeParse } from 'd3-time-format';
+
+const { items } = Astro.props;
+
+const formatYear = timeFormat('%Y');
+const parseYear = timeParse('%Y-%m');
+---
+
+<ul class="list-none flex flex-col gap-12">
+  {
+    items.map(({ data }) => (
+      <li class="experience flex flex-col md:flex-row items-start gap-4">
+        <span class="heading text-xs font-light bg-black px-2 py-1 text-white">
+          {formatYear(parseYear(data.yearsActive.start))} -{' '}
+          {formatYear(parseYear(data.yearsActive.end))}
+        </span>
+        <div>
+          <h2 class="heading text-2xl">{data.role}</h2>
+          <div class="heading text-gray-500 text-lg italic">
+            {data.url ? (
+              <a class="underline" href={data.url}>
+                {data.companyName}
+              </a>
+            ) : (
+              data.companyName
+            )}
+            - {data.location}
+          </div>
+        </div>
+      </li>
+    ))
+  }
+</ul>

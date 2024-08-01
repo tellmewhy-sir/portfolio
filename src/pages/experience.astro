@@ -1,6 +1,6 @@
 ---
-// import Timeline from '../components/react/Timeline';
 import Timeline from '../components/react/Timeline/d3';
+import ExperienceList from '../components/ExperienceList.astro';
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
@@ -10,8 +10,37 @@ const experienceItems = await getCollection('experience');
 <Layout title="Experience">
   <main class="container">
     <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
-    <div class="h-[500px]">
+    <button
+      id="js-toggle"
+      class="rounded-2xl px-4 py-2 bg-black heading text-white mb-4"
+    >
+      View List
+    </button>
+    <div class="h-[500px]" id="js-timeline-view">
       <Timeline items={experienceItems} client:load />
+    </div>
+    <div class="h-[500px] hidden" id="js-list-view">
+      <ExperienceList items={experienceItems} />
     </div>
   </main>
 </Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const toggleBtn = document.getElementById('js-toggle');
+    const timelineView = document.getElementById('js-timeline-view');
+    const listView = document.getElementById('js-list-view');
+
+    toggleBtn?.addEventListener('click', () => {
+      if (timelineView?.classList.contains('hidden')) {
+        timelineView.classList.remove('hidden');
+        listView?.classList.add('hidden');
+        toggleBtn.textContent = 'View List';
+      } else if (listView?.classList.contains('hidden')) {
+        listView?.classList.remove('hidden');
+        timelineView?.classList.add('hidden');
+        toggleBtn.textContent = 'View Timeline';
+      }
+    });
+  });
+</script>

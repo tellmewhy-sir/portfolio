@@ -41,11 +41,10 @@ const TimelineSpans = ({ data, scale }) => {
   const dateFormat = d3.timeParse('%Y-%m');
 
   return (
-    <g>
+    <>
       {data.map(({ id, data }, i) => (
-        <>
+        <g key={id}>
           <rect
-            key={id}
             x={scale(dateFormat(data.yearsActive.end))}
             y={i * 40 + 8}
             height={30}
@@ -56,7 +55,6 @@ const TimelineSpans = ({ data, scale }) => {
             )}
           />
           <text
-            key={`${id}-text`}
             x={scale(dateFormat(data.yearsActive.end))}
             y={i * 40 + 8}
             dy={20}
@@ -66,9 +64,9 @@ const TimelineSpans = ({ data, scale }) => {
           >
             {data.companyName}
           </text>
-        </>
+        </g>
       ))}
-    </g>
+    </>
   );
 };
 
@@ -79,11 +77,12 @@ const TickTracker = ({ height, scale, parentEl }) => {
   const { x, y } = useMousePosition();
 
   useEffect(() => {
-    if (!parentEl.current) return;
-    const { left } = parentEl.current.getBoundingClientRect();
-    let newOffset = x - left;
-    if (newOffset < 0) newOffset = 0;
-    setOffset(newOffset);
+    if (parentEl.current) {
+      const { left } = parentEl.current.getBoundingClientRect();
+      let newOffset = x - left;
+      if (newOffset < 0) newOffset = 0;
+      setOffset(newOffset);
+    }
   }, [x, y, offset]);
   return (
     <g>
@@ -105,7 +104,6 @@ const TickTracker = ({ height, scale, parentEl }) => {
 };
 
 export default function Timeline({ items }) {
-  // const timelineEl = useRef(null)
   const [timelineEl, dms] = useChartDimensions({
     width: 800,
     height: 400,
