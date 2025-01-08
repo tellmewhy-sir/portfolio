@@ -3,36 +3,33 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import './styles.css';
 import { useMousePosition, useChartDimensions } from '../../hooks';
 
-const TimelineAxis = ({ scale }) => {
+const TimelineAxis = ({ scale, isMobile }) => {
   const dateTicks = useMemo(() => {
-    return scale.ticks().map((date) => {
-      return {
-        date,
-        year: date.getFullYear(),
-        xOffset: scale(date),
-      };
-    });
-  });
+    const tickCount = isMobile ? 5 : scale.ticks().length;
+    return scale.ticks(tickCount).map((date) => ({
+      date,
+      year: date.getFullYear(),
+      xOffset: scale(date),
+    }));
+  }, [scale, isMobile]);
 
   return (
     <g>
       <path d="M 9.5 0.5 H 800.5" stroke="currentColor" />
-      {dateTicks.map(({ year, xOffset }) => {
-        return (
-          <g key={year} transform={`translate(${xOffset}, 0)`}>
-            <line y2="-6" stroke="currentColor" />
-            <text
-              style={{
-                fontSize: '10px',
-                textAnchor: 'middle',
-                transform: 'translateY(-20px)',
-              }}
-            >
-              {year}
-            </text>
-          </g>
-        );
-      })}
+      {dateTicks.map(({ year, xOffset }) => (
+        <g key={year} transform={`translate(${xOffset}, 0)`}>
+          <line y2={isMobile ? "-4" : "-6"} stroke="currentColor" />
+          <text
+            style={{
+              fontSize: isMobile ? '8px' : '10px',
+              textAnchor: 'middle',
+              transform: `translateY(-${isMobile ? 12 : 20}px)`,
+            }}
+          >
+            {year}
+          </text>
+        </g>
+      ))}
     </g>
   );
 };
