@@ -12,9 +12,9 @@ const experienceItems = await getCollection('experience');
     <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
     <button
       id="js-toggle"
-      class="rounded-2xl px-4 py-2 bg-black heading text-white mb-4"
+      class="rounded-2xl px-4 py-2 bg-black heading text-white text-sm mb-4"
     >
-      View List
+      List view
     </button>
     <div class="h-[500px]" id="js-timeline-view">
       <Timeline items={experienceItems} client:load />
@@ -35,11 +35,11 @@ const experienceItems = await getCollection('experience');
       if (timelineView?.classList.contains('hidden')) {
         timelineView.classList.remove('hidden');
         listView?.classList.add('hidden');
-        toggleBtn.textContent = 'View List';
+        toggleBtn.textContent = 'List View';
       } else if (listView?.classList.contains('hidden')) {
         listView?.classList.remove('hidden');
         timelineView?.classList.add('hidden');
-        toggleBtn.textContent = 'View Timeline';
+        toggleBtn.textContent = 'Timeline View';
       }
     });
   });

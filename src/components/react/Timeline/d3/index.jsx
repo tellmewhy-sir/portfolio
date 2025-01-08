@@ -38,31 +38,39 @@ const TimelineAxis = ({ scale }) => {
 };
 
 const TimelineSpans = ({ data, scale }) => {
-  const dateFormat = d3.timeParse('%Y-%m');
+  const dateFormat = useMemo(() => d3.timeParse('%Y-%m'), []);
+  
+  const spans = useMemo(() => data.map(({ id, data }, i) => ({
+    id,
+    x: scale(dateFormat(data.yearsActive.end)),
+    y: i * 40 + 8,
+    width: Math.abs(
+      scale(dateFormat(data.yearsActive.end)) -
+      scale(dateFormat(data.yearsActive.start))
+    ),
+    companyName: data.companyName
+  })), [data, scale, dateFormat]);
 
   return (
     <>
-      {data.map(({ id, data }, i) => (
+      {spans.map(({ id, x, y, width, companyName }) => (
         <g key={id}>
           <rect
-            x={scale(dateFormat(data.yearsActive.end))}
-            y={i * 40 + 8}
+            x={x}
+            y={y}
             height={30}
             fill="currentColor"
-            width={Math.abs(
-              scale(dateFormat(data.yearsActive.end)) -
-                scale(dateFormat(data.yearsActive.start))
-            )}
+            width={width}
           />
           <text
-            x={scale(dateFormat(data.yearsActive.end))}
-            y={i * 40 + 8}
+            x={x}
+            y={y}
             dy={20}
             dx={5}
             fill="white"
             fontSize="12px"
           >
-            {data.companyName}
+            {companyName}
           </text>
         </g>
       ))}
