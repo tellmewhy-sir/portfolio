@@ -26,9 +26,9 @@ const groupedProjects = projects.reduce((acc, item) => {
             <section class="mb-12">
               <h2 class="heading text-2xl mb-4 underline">{category}.</h2>
               <ul class="flex flex-col gap-2">
-                {groupedProjects[category].map(({ data, slug }) => (
+                {groupedProjects[category].map(({ data, id }) => (
                   <li class="font-light">
-                    <a href={`works/${slug}`}>{data.title}</a>
+                    <a href={`works/${id}`}>{data.title}</a>
                   </li>
                 ))}
               </ul>
