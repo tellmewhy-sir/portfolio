@@ -9,18 +9,20 @@ const experienceItems = await getCollection('experience');
 
 <Layout title="Experience">
   <main class="container">
-    <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
-    <button
-      id="js-toggle"
-      class="rounded-2xl px-4 py-2 bg-black heading text-white text-sm mb-4"
-    >
-      List view
-    </button>
-    <div class="h-[500px]" id="js-timeline-view">
-      <Timeline items={experienceItems} client:load />
-    </div>
-    <div class="h-[500px] hidden" id="js-list-view">
-      <ExperienceList items={experienceItems} />
+    <div class="p-4 ml-8">
+      <h1 class="heading text-3xl font-medium mb-12">experience.</h1>
+      <button
+        id="js-toggle"
+        class="rounded-2xl px-4 py-2 bg-black heading text-white text-sm mb-4"
+      >
+        List view
+      </button>
+      <div class="h-[500px]" id="js-timeline-view">
+        <Timeline items={experienceItems} client:load />
+      </div>
+      <div class="h-[500px] hidden" id="js-list-view">
+        <ExperienceList items={experienceItems} />
+      </div>
     </div>
   </main>
 </Layout>
